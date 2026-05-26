@@ -1,0 +1,49 @@
+meta {
+  name: New company
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{uri}}/v1.0/companies
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  {
+    "name": "Acme Corporation",
+    "vatNumber": "FR12345678901",
+    "currencyCode": "EUR",
+    "street": "123 Main St",
+    "otherStreet": "Suite 4B",
+    "city": "Paris",
+    "country": "France",
+    "state": "Île-de-France",
+    "zipCode": "75001",
+    "phone": "+33 1 23 45 67 89",
+    "email": "contact@acme.com",
+    "website": "https://www.acme.com",
+    "note": "A leading provider of solutions",
+    "logo": "https://cdn.acme.com/logo.png"
+  }
+}
+
+script:post-response {
+  let data = res.getBody();
+  
+  if (data && data.id) {
+    bru.setEnvVar("companyId", String(data.id));
+  } else {
+    console.error("Attention: l'ID est introuvable à la racine de res.getBody()");
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

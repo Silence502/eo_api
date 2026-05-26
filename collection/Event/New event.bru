@@ -1,0 +1,54 @@
+meta {
+  name: New event
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{uri}}/v1.0/events
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  {
+    "name": "Birthday Party",
+    "description": "A fun birthday party for kids",
+    "location": {
+      "name": "Central Park",
+      "street": "123 Main St",
+      "otherStreet": "Apt 4B",
+      "city": "New York",
+      "state": "NY",
+      "zipCode": "10001",
+      "country": "USA"
+    },
+    "type": "party",
+    "nbGuests": 50,
+    "startDate": "2026-12-25T18:00:00Z",
+    "endDate": "2026-12-25T22:00:00Z",
+    "currencyCode": "EUR",
+    "durationType": "hours",
+    "duration": 4,
+    "price": 199.99
+  }
+}
+
+script:post-response {
+  let data = res.getBody();
+  
+  if (data && data.id) {
+    bru.setEnvVar("eventId", String(data.id));
+  } else {
+    console.error("Attention: l'ID est introuvable à la racine de res.getBody()");
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -1,0 +1,34 @@
+meta {
+  name: Update budget item
+  type: http
+  seq: 8
+}
+
+put {
+  url: {{uri}}/v1.0/budget-items/{{budgetItemId}}
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  {
+    "currencyCode": "EUR",
+    "category": "Quelque chose",
+    "label": "Danseur",
+    "estimatedAmount": 500,
+    "actualAmount": 496,
+    "paidAmount": 200,
+    "dueDate": "2026-06-15",
+    "status": "pending",
+    "notes": "Deposit paid on March 1st"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

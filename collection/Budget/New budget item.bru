@@ -1,0 +1,45 @@
+meta {
+  name: New budget item
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{uri}}/v1.0/budget-items
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  {
+    "eventId": 9,
+    "currencyCode": "EUR",
+    "category": "Catering",
+    "label": "Buffet dinner",
+    "estimatedAmount": 1500,
+    "actualAmount": 1450,
+    "paidAmount": 500,
+    "dueDate": "2026-06-15",
+    "status": "pending",
+    "notes": "Deposit paid on March 1st"
+  }
+}
+
+script:post-response {
+  let data = res.getBody();
+  
+  if (data && data.id) {
+    bru.setEnvVar("budgetItemId", String(data.id));
+  } else {
+    console.error("Attention: l'ID est introuvable à la racine de res.getBody()");
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

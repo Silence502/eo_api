@@ -1,0 +1,34 @@
+meta {
+  name: Login
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{uri}}/v1.0/auth/login
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "email": "user@example.com",
+    "password": "StrongP@ssw0rd"
+  }
+}
+
+script:post-response {
+  let data = res.getBody();
+  
+  if (data && data.accessToken) {
+    bru.setEnvVar("accessToken", String(data.accessToken));
+    bru.setEnvVar("refreshToken", String(data.refreshToken));
+  } else {
+    console.error("Attention: accessToken est introuvable à la racine de res.getBody()");
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

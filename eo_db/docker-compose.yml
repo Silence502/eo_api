@@ -1,0 +1,31 @@
+services:
+  mysql-db:
+    image: mysql:8.0
+    container_name: mysql-container-only
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: azerty
+      MYSQL_DATABASE: eo_db
+      MYSQL_USER: dev
+      MYSQL_PASSWORD: azerty
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./eo_db.sql:/docker-entrypoint-initdb.d/eo_db.sql:ro
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: pma-container-only
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      PMA_ARBITRARY: 1 # Optionnel : permet de se connecter à n'importe quel hôte
+      PMA_HOST: mysql-db
+      MYSQL_ROOT_PASSWORD: azerty
+    depends_on:
+      - mysql-db
+
+volumes:
+  db_data:

@@ -1,0 +1,27 @@
+meta {
+  name: Register
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{uri}}/v1.0/auth/register
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "email": "user@example.com",
+    "password": "StrongP@ssw0rd",
+    "firstName": "John",
+    "lastName": "Doe",
+    "termsAccepted": true,
+    "privacyAccepted": true,
+    "consentVersion": "1.0"
+  }
+}
+
+docs {
+  This request retrieves a list of users from the JSONPlaceholder API.
+}

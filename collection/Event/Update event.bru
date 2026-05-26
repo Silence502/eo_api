@@ -1,0 +1,44 @@
+meta {
+  name: Update event
+  type: http
+  seq: 6
+}
+
+put {
+  url: {{uri}}/v1.0/events/1
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  {
+    "name": "Mariage Jean-Michel et Duduche",
+    "description": "Un mariage de ouf",
+    "location": {
+      "name": "Espace cluf",
+      "street": "28 rue des Pingouins",
+      "otherStreet": "Apt 4B",
+      "city": "Troyes",
+      "state": "Aube",
+      "zipCode": "10001",
+      "country": "FR"
+    },
+    "type": "party",
+    "nbGuests": 50,
+    "startDate": "2026-12-25T18:00:00Z",
+    "endDate": "2026-12-25T22:00:00Z",
+    "currencyCode": "EUR",
+    "durationType": "hours",
+    "duration": 6,
+    "price": 150.99
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

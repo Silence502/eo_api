@@ -1,0 +1,20 @@
+meta {
+  name: Delete company
+  type: http
+  seq: 7
+}
+
+delete {
+  url: {{uri}}/v1.0/companies/{{companyId}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

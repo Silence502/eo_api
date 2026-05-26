@@ -1,0 +1,59 @@
+package com.eoapi.app.Auth.dto;
+
+import java.time.LocalDateTime;
+
+public class ProfileResponse {
+
+	private Long id;
+	private String email;
+	private String firstName;
+	private String lastName;
+	private String role;
+	private String plan;
+	private LocalDateTime createdAt;
+	private LocalDateTime updatedAt;
+
+	public ProfileResponse(Long id, String email, String firstName, String lastName,
+			String role, String plan, LocalDateTime createdAt, LocalDateTime updatedAt) {
+		this.id = id;
+		this.email = email;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.role = role;
+		this.plan = plan;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public String getPlan() {
+		return plan;
+	}
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
+	}
+}

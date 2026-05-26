@@ -1,0 +1,20 @@
+meta {
+  name: Get company by ID
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{uri}}/v1.0/companies/{{companyId}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

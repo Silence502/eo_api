@@ -1,0 +1,20 @@
+meta {
+  name: Get all events
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{uri}}/v1.0/events
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

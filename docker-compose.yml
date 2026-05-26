@@ -1,0 +1,17 @@
+services:
+  app:
+    build: .
+    container_name: spring-api
+    ports:
+      - "8000:8000"
+    networks:
+      - eo_db_default
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/eo_db?allowPublicKeyRetrieval=true&useSSL=false
+      SPRING_DATASOURCE_USERNAME: dev
+      SPRING_DATASOURCE_PASSWORD: azerty
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+
+networks:
+  eo_db_default:
+    external: true

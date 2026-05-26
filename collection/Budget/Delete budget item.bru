@@ -1,0 +1,20 @@
+meta {
+  name: Delete budget item
+  type: http
+  seq: 9
+}
+
+delete {
+  url: {{uri}}/v1.0/budget-items/{{budgetItemId}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
