@@ -1,5 +1,5 @@
 # ── Stage 1 : Build ──────────────────────────────────────────────────────────
-FROM eclipse-temurin:25-jdk-alpine AS builder
+FROM eclipse-temurin:25-jdk-jammy AS builder
 
 WORKDIR /app
 
@@ -13,10 +13,10 @@ COPY src ./src
 RUN ./gradlew bootJar --no-daemon --quiet
 
 # ── Stage 2 : Runtime ─────────────────────────────────────────────────────────
-FROM eclipse-temurin:25-jre-alpine
+FROM eclipse-temurin:25-jre-jammy
 
 # Exécution en utilisateur non-root (bonne pratique de sécurité)
-RUN addgroup -S spring && adduser -S spring -G spring
+RUN groupadd --system spring && useradd --system --gid spring --no-create-home spring
 USER spring
 
 WORKDIR /app

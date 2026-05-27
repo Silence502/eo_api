@@ -2,4 +2,3 @@
 .vscode
 build/
 !build/libs/*.jar
-src/
