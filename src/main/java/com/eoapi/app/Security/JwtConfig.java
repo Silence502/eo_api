@@ -20,13 +20,13 @@ public class JwtConfig {
 
 	@Bean
 	public JwtDecoder jwtDecoder(JwtProperties jwtProperties) {
-		SecretKey key = new SecretKeySpec(Base64.getDecoder().decode(jwtProperties.getSecret()), "HmacSHA256");
+		SecretKey key = new SecretKeySpec(Base64.getUrlDecoder().decode(jwtProperties.getSecret()), "HmacSHA256");
 		return NimbusJwtDecoder.withSecretKey(key).macAlgorithm(MacAlgorithm.HS256).build();
 	}
 
 	@Bean
 	public JwtEncoder jwtEncoder(JwtProperties jwtProperties) {
-		SecretKey key = new SecretKeySpec(Base64.getDecoder().decode(jwtProperties.getSecret()), "HmacSHA256");
+		SecretKey key = new SecretKeySpec(Base64.getUrlDecoder().decode(jwtProperties.getSecret()), "HmacSHA256");
 		OctetSequenceKey jwk = new OctetSequenceKey.Builder(key.getEncoded()).build();
 		return new NimbusJwtEncoder(new ImmutableJWKSet<>(new JWKSet(jwk)));
 	}
