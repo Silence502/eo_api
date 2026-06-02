@@ -112,7 +112,7 @@ CREATE TABLE `company_user` (
 --
 
 CREATE TABLE `consents` (
-    `id` bigint UNSIGNED NOT NULL,
+    `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
     `user_id` bigint UNSIGNED NOT NULL,
     `type` enum(
         'terms',
@@ -261,16 +261,11 @@ CREATE TABLE `locations` (
 --
 
 CREATE TABLE `settings` (
+    `id` bigint UNSIGNED NOT NULL,
     `user_id` bigint UNSIGNED NOT NULL,
-    `language` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'en',
-    `theme` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'light',
-    `timezone` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'Europe/Paris',
-    `receive_notifications` tinyint(1) NOT NULL DEFAULT '1',
-    `receive_reminders` tinyint(1) NOT NULL DEFAULT '1',
-    `misc_01` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-    `misc_02` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-    `misc_03` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-    `id` bigint UNSIGNED NOT NULL
+    `key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+    `value` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+    `updated_at` datetime(6) DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(6)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 --
@@ -279,28 +274,34 @@ CREATE TABLE `settings` (
 
 INSERT INTO
     `settings` (
+        `id`,
         `user_id`,
-        `language`,
-        `theme`,
-        `timezone`,
-        `receive_notifications`,
-        `receive_reminders`,
-        `misc_01`,
-        `misc_02`,
-        `misc_03`,
-        `id`
+        `key`,
+        `value`,
+        `created_at`
     )
-VALUES (
+VALUES (1, 6, 'language', 'en', NOW()),
+    (2, 6, 'theme', 'light', NOW()),
+    (
+        3,
         6,
-        'en',
-        'light',
+        'timezone',
         'Europe/Paris',
-        1,
-        1,
-        NULL,
-        NULL,
-        NULL,
-        4
+        NOW()
+    ),
+    (
+        4,
+        6,
+        'receive_notifications',
+        'true',
+        NOW()
+    ),
+    (
+        5,
+        6,
+        'receive_reminders',
+        'true',
+        NOW()
     );
 
 -- --------------------------------------------------------

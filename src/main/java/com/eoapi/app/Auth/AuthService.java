@@ -5,6 +5,8 @@ import com.eoapi.app.Auth.dto.LoginRequest;
 import com.eoapi.app.Auth.dto.ProfileResponse;
 import com.eoapi.app.Auth.dto.RegisterRequest;
 import com.eoapi.app.Consents.ConsentModel;
+import com.eoapi.app.Settings.SettingsModel;
+import com.eoapi.app.Settings.SettingsRepository;
 import com.eoapi.app.Consents.ConsentRepository;
 import com.eoapi.app.Security.JwtService;
 import com.eoapi.app.Users.UserModel;
@@ -26,13 +28,15 @@ public class AuthService {
 	private final ConsentRepository consentRepository;
 	private final PasswordEncoder passwordEncoder;
 	private final JwtService jwtService;
+	private final SettingsRepository settingsRepository;
 
 	public AuthService(UserRepository userRepository, ConsentRepository consentRepository,
-			PasswordEncoder passwordEncoder, JwtService jwtService) {
+			PasswordEncoder passwordEncoder, JwtService jwtService, SettingsRepository settingsRepository) {
 		this.userRepository = userRepository;
 		this.consentRepository = consentRepository;
 		this.passwordEncoder = passwordEncoder;
 		this.jwtService = jwtService;
+		this.settingsRepository = settingsRepository;
 	}
 
 	public AuthResponse register(RegisterRequest request) {
@@ -49,6 +53,9 @@ public class AuthService {
 
 		saveConsent(user.getId(), "terms", request.getTermsAccepted(), request.getConsentVersion());
 		saveConsent(user.getId(), "privacy", request.getPrivacyAccepted(), request.getConsentVersion());
+		saveConsent(user.getId(), "marketing", request.getMarketingAccepted(), request.getConsentVersion());
+
+		saveSettings(user.getId(), request);
 
 		return buildTokens(user);
 	}
@@ -107,5 +114,37 @@ public class AuthService {
 		consent.setGiven(given != null && given);
 		consent.setVersion(version);
 		consentRepository.save(consent);
+	}
+
+	private void saveSettings(Long userId, RegisterRequest request) {
+		SettingsModel languageSetting = new SettingsModel();
+		languageSetting.setUserId(userId);
+		languageSetting.setKey("language");
+		languageSetting.setValue(request.getLanguage() != null ? request.getLanguage() : "en");
+		settingsRepository.save(languageSetting);
+
+		SettingsModel themeSetting = new SettingsModel();
+		themeSetting.setUserId(userId);
+		themeSetting.setKey("theme");
+		themeSetting.setValue(request.getTheme() != null ? request.getTheme() : "light");
+		settingsRepository.save(themeSetting);
+
+		SettingsModel timezoneSetting = new SettingsModel();
+		timezoneSetting.setUserId(userId);
+		timezoneSetting.setKey("timezone");
+		timezoneSetting.setValue(request.getTimezone() != null ? request.getTimezone() : "UTC");
+		settingsRepository.save(timezoneSetting);
+
+		SettingsModel receiveNotificationsSetting = new SettingsModel();
+		receiveNotificationsSetting.setUserId(userId);
+		receiveNotificationsSetting.setKey("receive_notifications");
+		receiveNotificationsSetting.setValue(request.getReceiveNotifications() != null ? request.getReceiveNotifications() : "true");
+		settingsRepository.save(receiveNotificationsSetting);
+
+		SettingsModel receiveRemindersSetting = new SettingsModel();
+		receiveRemindersSetting.setUserId(userId);
+		receiveRemindersSetting.setKey("receive_reminders");
+		receiveRemindersSetting.setValue(request.getRevceiveReminders() != null ? request.getRevceiveReminders() : "true");
+		settingsRepository.save(receiveRemindersSetting);
 	}
 }

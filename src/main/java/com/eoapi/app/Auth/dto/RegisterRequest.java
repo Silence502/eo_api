@@ -27,8 +27,17 @@ public class RegisterRequest {
 	@NotBlank
 	private String consentVersion;
 
-	@NotNull
 	private Boolean marketingAccepted;
+
+	private String language;
+
+	private String theme;
+
+	private String timezone;
+
+	private String receiveNotifications;
+
+	private String revceiveReminders;
 
 	public String getEmail() {
 		return email;
@@ -92,5 +101,45 @@ public class RegisterRequest {
 
 	public void setConsentVersion(String consentVersion) {
 		this.consentVersion = consentVersion;
+	}
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+
+	public String getTheme() {
+		return theme;
+	}
+
+	public void setTheme(String theme) {
+		this.theme = theme;
+	}
+
+	public String getTimezone() {
+		return timezone;
+	}
+
+	public void setTimezone(String timezone) {
+		this.timezone = timezone;
+	}
+
+	public String getReceiveNotifications() {
+		return receiveNotifications;
+	}
+
+	public void setReceiveNotifications(String receiveNotifications) {
+		this.receiveNotifications = receiveNotifications;
+	}
+
+	public String getRevceiveReminders() {
+		return revceiveReminders;
+	}
+
+	public void setRevceiveReminders(String revceiveReminders) {
+		this.revceiveReminders = revceiveReminders;
 	}
 }
