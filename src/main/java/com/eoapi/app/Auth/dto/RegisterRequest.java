@@ -27,6 +27,8 @@ public class RegisterRequest {
 	@NotBlank
 	private String consentVersion;
 
+	private Boolean marketingAccepted;
+
 	public String getEmail() {
 		return email;
 	}
@@ -77,6 +79,14 @@ public class RegisterRequest {
 
 	public String getConsentVersion() {
 		return consentVersion;
+	}
+
+	public Boolean getMarketingAccepted() {
+		return marketingAccepted;
+	}
+
+	public void setMarketingAccepted(Boolean marketingAccepted) {
+		this.marketingAccepted = marketingAccepted;
 	}
 
 	public void setConsentVersion(String consentVersion) {
