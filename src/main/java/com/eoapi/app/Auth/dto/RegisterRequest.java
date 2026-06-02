@@ -27,6 +27,7 @@ public class RegisterRequest {
 	@NotBlank
 	private String consentVersion;
 
+	@NotNull
 	private Boolean marketingAccepted;
 
 	public String getEmail() {
