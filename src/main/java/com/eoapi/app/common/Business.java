@@ -1,6 +1,5 @@
 package com.eoapi.app.common;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.*;
 
