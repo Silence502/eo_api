@@ -1,5 +1,6 @@
 package com.eoapi.app.Users;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -37,7 +38,9 @@ public class UserModel implements UserDetails {
 	@Column(columnDefinition = "TEXT")
 	private String hashedRefreshToken;
 
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private LocalDateTime createdAt;
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private LocalDateTime updatedAt;
 
 	@PrePersist

@@ -1,5 +1,6 @@
 package com.eoapi.app.Events;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
@@ -33,7 +34,9 @@ public class LocationModel {
 	@Column(name = "event_id", nullable = false)
 	private Long eventId;
 
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private LocalDateTime createdAt;
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private LocalDateTime updatedAt;
 
 	@PrePersist

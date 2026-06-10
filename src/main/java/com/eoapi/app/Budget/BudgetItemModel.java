@@ -2,6 +2,7 @@ package com.eoapi.app.Budget;
 
 import jakarta.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -34,7 +35,9 @@ public class BudgetItemModel {
 	@Column(columnDefinition = "TEXT")
 	private String notes;
 
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private LocalDateTime createdAt;
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private LocalDateTime updatedAt;
 
 	@PrePersist

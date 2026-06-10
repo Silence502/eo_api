@@ -1,5 +1,6 @@
 package com.eoapi.app.Consents;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
@@ -23,6 +24,7 @@ public class ConsentModel {
 	@Column(nullable = false)
 	private boolean given;
 
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private LocalDateTime givenAt;
 
 	@PrePersist

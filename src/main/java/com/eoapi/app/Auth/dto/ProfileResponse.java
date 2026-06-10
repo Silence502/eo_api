@@ -1,5 +1,6 @@
 package com.eoapi.app.Auth.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
 
 public class ProfileResponse {
@@ -10,7 +11,9 @@ public class ProfileResponse {
 	private String lastName;
 	private String role;
 	private String plan;
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private LocalDateTime createdAt;
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private LocalDateTime updatedAt;
 
 	public ProfileResponse(Long id, String email, String firstName, String lastName,

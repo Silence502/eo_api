@@ -1,5 +1,6 @@
 package com.eoapi.app.Settings;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
@@ -21,6 +22,7 @@ public class SettingsModel {
 	private String value;
 
 	@Column(name = "updated_at")
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private LocalDateTime updatedAt;
 
 	// Getters and setters
