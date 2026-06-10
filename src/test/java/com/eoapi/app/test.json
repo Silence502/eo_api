@@ -18,7 +18,15 @@
 		"vatNumber": "123456789",
 		"phone": "555-555-5555",
 		"email": "info@acme.com",
-		"website": "https://www.acme.com"
+		"website": "https://www.acme.com",
+		"address": {
+			"street": "456 Business Rd",
+			"otherStreet": "Suite 200",
+			"city": "Businesstown",
+			"state": "NY",
+			"zip": "67890",
+			"country": "USA"
+		}
 	},
 	"plan": "free",
 	"role": "USER",

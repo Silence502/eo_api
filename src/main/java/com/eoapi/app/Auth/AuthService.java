@@ -6,6 +6,7 @@ import com.eoapi.app.Auth.dto.ProfileResponse;
 import com.eoapi.app.Auth.dto.RegisterRequest;
 import com.eoapi.app.Auth.dto.UpdateProfileRequest;
 import com.eoapi.app.common.Address;
+import com.eoapi.app.common.Business;
 import com.eoapi.app.Consents.ConsentModel;
 import com.eoapi.app.Settings.SettingsModel;
 import com.eoapi.app.Settings.SettingsRepository;
@@ -76,7 +77,8 @@ public class AuthService {
 	public ProfileResponse profile(UserModel user) {
 		return new ProfileResponse(
 				user.getId(), user.getEmail(), user.getFirstName(), user.getLastName(),
-				user.getRole().name(), user.getPlan(), user.getAddress(), user.getCreatedAt(), user.getUpdatedAt());
+				user.getRole().name(), user.getPlan(), user.getAddress(), user.getBusiness(),
+				user.getCreatedAt(), user.getUpdatedAt());
 	}
 
 	public ProfileResponse updateProfile(UserModel user, UpdateProfileRequest request) {
@@ -105,6 +107,36 @@ public class AuthService {
 			if (request.getAddress().getCountry() != null)
 				address.setCountry(request.getAddress().getCountry());
 			user.setAddress(address);
+		}
+		if (request.getBusiness() != null) {
+			Business business = user.getBusiness() != null ? user.getBusiness() : new Business();
+			if (request.getBusiness().getName() != null)
+				business.setName(request.getBusiness().getName());
+			if (request.getBusiness().getVatNumber() != null)
+				business.setVatNumber(request.getBusiness().getVatNumber());
+			if (request.getBusiness().getPhone() != null)
+				business.setPhone(request.getBusiness().getPhone());
+			if (request.getBusiness().getEmail() != null)
+				business.setEmail(request.getBusiness().getEmail());
+			if (request.getBusiness().getWebsite() != null)
+				business.setWebsite(request.getBusiness().getWebsite());
+			if (request.getBusiness().getAddress() != null) {
+				Address businessAddress = business.getAddress() != null ? business.getAddress() : new Address();
+				if (request.getBusiness().getAddress().getStreet() != null)
+					businessAddress.setStreet(request.getBusiness().getAddress().getStreet());
+				if (request.getBusiness().getAddress().getOtherStreet() != null)
+					businessAddress.setOtherStreet(request.getBusiness().getAddress().getOtherStreet());
+				if (request.getBusiness().getAddress().getCity() != null)
+					businessAddress.setCity(request.getBusiness().getAddress().getCity());
+				if (request.getBusiness().getAddress().getState() != null)
+					businessAddress.setState(request.getBusiness().getAddress().getState());
+				if (request.getBusiness().getAddress().getZip() != null)
+					businessAddress.setZip(request.getBusiness().getAddress().getZip());
+				if (request.getBusiness().getAddress().getCountry() != null)
+					businessAddress.setCountry(request.getBusiness().getAddress().getCountry());
+				business.setAddress(businessAddress);
+			}
+			user.setBusiness(business);
 		}
 		userRepository.save(user);
 		return profile(user);

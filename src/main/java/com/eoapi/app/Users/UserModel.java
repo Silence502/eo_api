@@ -1,6 +1,7 @@
 package com.eoapi.app.Users;
 
 import com.eoapi.app.common.Address;
+import com.eoapi.app.common.Business;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -37,6 +38,22 @@ public class UserModel implements UserDetails {
 
 	@Embedded
 	private Address address;
+
+	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "name", column = @Column(name = "business_name")),
+			@AttributeOverride(name = "vatNumber", column = @Column(name = "business_vat_number")),
+			@AttributeOverride(name = "phone", column = @Column(name = "business_phone")),
+			@AttributeOverride(name = "email", column = @Column(name = "business_email")),
+			@AttributeOverride(name = "website", column = @Column(name = "business_website")),
+			@AttributeOverride(name = "address.street", column = @Column(name = "business_street")),
+			@AttributeOverride(name = "address.otherStreet", column = @Column(name = "business_other_street")),
+			@AttributeOverride(name = "address.city", column = @Column(name = "business_city")),
+			@AttributeOverride(name = "address.state", column = @Column(name = "business_state")),
+			@AttributeOverride(name = "address.zip", column = @Column(name = "business_zip")),
+			@AttributeOverride(name = "address.country", column = @Column(name = "business_country"))
+	})
+	private Business business;
 
 	@JsonIgnore
 	@Column(columnDefinition = "TEXT")
@@ -131,7 +148,21 @@ public class UserModel implements UserDetails {
 	}
 
 	public void setAddress(Address address) {
+		if (this.address == null)
+			this.address = new Address();
 		this.address = address;
+	}
+
+	public Business getBusiness() {
+		if (business == null)
+			business = new Business();
+		return business;
+	}
+
+	public void setBusiness(Business business) {
+		if (this.business == null)
+			this.business = new Business();
+		this.business = business;
 	}
 
 	public String getHashedRefreshToken() {

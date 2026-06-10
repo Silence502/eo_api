@@ -1,6 +1,7 @@
 package com.eoapi.app.Auth.dto;
 
 import com.eoapi.app.common.dto.AddressRequest;
+import com.eoapi.app.common.dto.BusinessRequest;
 
 public class UpdateProfileRequest {
 
@@ -8,6 +9,15 @@ public class UpdateProfileRequest {
 	private String firstName;
 	private String lastName;
 	private AddressRequest address;
+	private BusinessRequest business;
+
+	public BusinessRequest getBusiness() {
+		return business;
+	}
+
+	public void setBusiness(BusinessRequest business) {
+		this.business = business;
+	}
 
 	public String getEmail() {
 		return email;
