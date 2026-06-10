@@ -1,5 +1,6 @@
 package com.eoapi.app.Users;
 
+import com.eoapi.app.common.Address;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -33,6 +34,9 @@ public class UserModel implements UserDetails {
 	private String plan = "free";
 	private String firstName;
 	private String lastName;
+
+	@Embedded
+	private Address address;
 
 	@JsonIgnore
 	@Column(columnDefinition = "TEXT")
@@ -118,6 +122,16 @@ public class UserModel implements UserDetails {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	public Address getAddress() {
+		if (address == null)
+			address = new Address();
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 
 	public String getHashedRefreshToken() {

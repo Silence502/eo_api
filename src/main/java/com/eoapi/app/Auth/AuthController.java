@@ -4,6 +4,7 @@ import com.eoapi.app.Auth.dto.AuthResponse;
 import com.eoapi.app.Auth.dto.LoginRequest;
 import com.eoapi.app.Auth.dto.ProfileResponse;
 import com.eoapi.app.Auth.dto.RegisterRequest;
+import com.eoapi.app.Auth.dto.UpdateProfileRequest;
 import com.eoapi.app.Users.UserModel;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -34,6 +35,12 @@ public class AuthController {
 	@GetMapping("/profile")
 	public ResponseEntity<ProfileResponse> profile(@AuthenticationPrincipal UserModel user) {
 		return ResponseEntity.ok(authService.profile(user));
+	}
+
+	@PatchMapping("/profile")
+	public ResponseEntity<ProfileResponse> updateProfile(@AuthenticationPrincipal UserModel user,
+			@RequestBody UpdateProfileRequest request) {
+		return ResponseEntity.ok(authService.updateProfile(user, request));
 	}
 
 	@PostMapping("/refresh")

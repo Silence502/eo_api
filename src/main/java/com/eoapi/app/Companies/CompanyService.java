@@ -1,6 +1,7 @@
 package com.eoapi.app.Companies;
 
 import com.eoapi.app.Companies.dto.CompanyRequest;
+import com.eoapi.app.common.Address;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -46,12 +47,16 @@ public class CompanyService {
 		company.setVatNumber(request.getVatNumber());
 		if (request.getCurrencyCode() != null)
 			company.setCurrencyCode(request.getCurrencyCode());
-		company.setStreet(request.getStreet());
-		company.setOtherStreet(request.getOtherStreet());
-		company.setCity(request.getCity());
-		company.setCountry(request.getCountry());
-		company.setState(request.getState());
-		company.setZipCode(request.getZipCode());
+		if (request.getAddress() != null) {
+			Address address = new Address();
+			address.setStreet(request.getAddress().getStreet());
+			address.setOtherStreet(request.getAddress().getOtherStreet());
+			address.setCity(request.getAddress().getCity());
+			address.setState(request.getAddress().getState());
+			address.setZip(request.getAddress().getZip());
+			address.setCountry(request.getAddress().getCountry());
+			company.setAddress(address);
+		}
 		company.setPhone(request.getPhone());
 		company.setEmail(request.getEmail());
 		company.setWebsite(request.getWebsite());

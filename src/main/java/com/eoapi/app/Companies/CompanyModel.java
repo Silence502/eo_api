@@ -1,5 +1,6 @@
 package com.eoapi.app.Companies;
 
+import com.eoapi.app.common.Address;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
@@ -17,12 +18,10 @@ public class CompanyModel {
 
 	private String vatNumber;
 	private String currencyCode = "EUR";
-	private String street;
-	private String otherStreet;
-	private String city;
-	private String country;
-	private String state;
-	private String zipCode;
+
+	@Embedded
+	private Address address;
+
 	private String phone;
 	private String email;
 	private String website;
@@ -76,52 +75,12 @@ public class CompanyModel {
 		this.currencyCode = currencyCode;
 	}
 
-	public String getStreet() {
-		return street;
+	public Address getAddress() {
+		return address;
 	}
 
-	public void setStreet(String street) {
-		this.street = street;
-	}
-
-	public String getOtherStreet() {
-		return otherStreet;
-	}
-
-	public void setOtherStreet(String otherStreet) {
-		this.otherStreet = otherStreet;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public String getCountry() {
-		return country;
-	}
-
-	public void setCountry(String country) {
-		this.country = country;
-	}
-
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
-	public String getZipCode() {
-		return zipCode;
-	}
-
-	public void setZipCode(String zipCode) {
-		this.zipCode = zipCode;
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 
 	public String getPhone() {

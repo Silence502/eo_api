@@ -4,6 +4,8 @@ import com.eoapi.app.Auth.dto.AuthResponse;
 import com.eoapi.app.Auth.dto.LoginRequest;
 import com.eoapi.app.Auth.dto.ProfileResponse;
 import com.eoapi.app.Auth.dto.RegisterRequest;
+import com.eoapi.app.Auth.dto.UpdateProfileRequest;
+import com.eoapi.app.common.Address;
 import com.eoapi.app.Consents.ConsentModel;
 import com.eoapi.app.Settings.SettingsModel;
 import com.eoapi.app.Settings.SettingsRepository;
@@ -74,7 +76,38 @@ public class AuthService {
 	public ProfileResponse profile(UserModel user) {
 		return new ProfileResponse(
 				user.getId(), user.getEmail(), user.getFirstName(), user.getLastName(),
-				user.getRole().name(), user.getPlan(), user.getCreatedAt(), user.getUpdatedAt());
+				user.getRole().name(), user.getPlan(), user.getAddress(), user.getCreatedAt(), user.getUpdatedAt());
+	}
+
+	public ProfileResponse updateProfile(UserModel user, UpdateProfileRequest request) {
+		if (request.getEmail() != null && !request.getEmail().equals(user.getEmail())) {
+			if (userRepository.existsByEmail(request.getEmail())) {
+				throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already in use");
+			}
+			user.setEmail(request.getEmail());
+		}
+		if (request.getFirstName() != null)
+			user.setFirstName(request.getFirstName());
+		if (request.getLastName() != null)
+			user.setLastName(request.getLastName());
+		if (request.getAddress() != null) {
+			Address address = user.getAddress() != null ? user.getAddress() : new Address();
+			if (request.getAddress().getStreet() != null)
+				address.setStreet(request.getAddress().getStreet());
+			if (request.getAddress().getOtherStreet() != null)
+				address.setOtherStreet(request.getAddress().getOtherStreet());
+			if (request.getAddress().getCity() != null)
+				address.setCity(request.getAddress().getCity());
+			if (request.getAddress().getState() != null)
+				address.setState(request.getAddress().getState());
+			if (request.getAddress().getZip() != null)
+				address.setZip(request.getAddress().getZip());
+			if (request.getAddress().getCountry() != null)
+				address.setCountry(request.getAddress().getCountry());
+			user.setAddress(address);
+		}
+		userRepository.save(user);
+		return profile(user);
 	}
 
 	public AuthResponse refresh(UserModel user, String rawRefreshToken) {
@@ -138,13 +171,15 @@ public class AuthService {
 		SettingsModel receiveNotificationsSetting = new SettingsModel();
 		receiveNotificationsSetting.setUserId(userId);
 		receiveNotificationsSetting.setKey("receive_notifications");
-		receiveNotificationsSetting.setValue(request.getReceiveNotifications() != null ? request.getReceiveNotifications() : "true");
+		receiveNotificationsSetting
+				.setValue(request.getReceiveNotifications() != null ? request.getReceiveNotifications() : "true");
 		settingsRepository.save(receiveNotificationsSetting);
 
 		SettingsModel receiveRemindersSetting = new SettingsModel();
 		receiveRemindersSetting.setUserId(userId);
 		receiveRemindersSetting.setKey("receive_reminders");
-		receiveRemindersSetting.setValue(request.getRevceiveReminders() != null ? request.getRevceiveReminders() : "true");
+		receiveRemindersSetting
+				.setValue(request.getRevceiveReminders() != null ? request.getRevceiveReminders() : "true");
 		settingsRepository.save(receiveRemindersSetting);
 	}
 }

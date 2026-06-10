@@ -1,5 +1,6 @@
 package com.eoapi.app.Auth.dto;
 
+import com.eoapi.app.common.Address;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
 
@@ -11,19 +12,21 @@ public class ProfileResponse {
 	private String lastName;
 	private String role;
 	private String plan;
+	private Address address;
 	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private LocalDateTime createdAt;
 	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private LocalDateTime updatedAt;
 
 	public ProfileResponse(Long id, String email, String firstName, String lastName,
-			String role, String plan, LocalDateTime createdAt, LocalDateTime updatedAt) {
+			String role, String plan, Address address, LocalDateTime createdAt, LocalDateTime updatedAt) {
 		this.id = id;
 		this.email = email;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.role = role;
 		this.plan = plan;
+		this.address = address;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
 	}
@@ -50,6 +53,10 @@ public class ProfileResponse {
 
 	public String getPlan() {
 		return plan;
+	}
+
+	public Address getAddress() {
+		return address;
 	}
 
 	public LocalDateTime getCreatedAt() {

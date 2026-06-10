@@ -1,0 +1,27 @@
+{
+	"id": 6,
+	"firstName": "John",
+	"lastName": "Doe",
+	"email": "user@example.com",
+	"address": {
+		"street": "123 Main St",
+		"otherStreet": "Apt 1",
+		"city": "Anytown",
+		"state": "CA",
+		"zip": "12345",
+		"country": "USA"
+	},
+	"phone": "555-555-5555",
+	"avatar": "https://example.com/avatar.jpg",
+	"business": {
+		"name": "Acme Inc.",
+		"vatNumber": "123456789",
+		"phone": "555-555-5555",
+		"email": "info@acme.com",
+		"website": "https://www.acme.com"
+	},
+	"plan": "free",
+	"role": "USER",
+	"createdAt": "2026-06-03T01:35:56",
+	"updatedAt": "2026-06-10T14:27:07"
+}

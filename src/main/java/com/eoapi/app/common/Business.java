@@ -1,0 +1,67 @@
+package com.eoapi.app.common;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.*;
+
+@Embeddable
+public class Business {
+	private String name;
+	private String vatNumber;
+	private String phone;
+	private String email;
+	private String website;
+	@Embedded
+	private Address address;
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		if (this.address == null)
+			this.address = new Address();
+		this.address = address;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getVatNumber() {
+		return vatNumber;
+	}
+
+	public void setVatNumber(String vatNumber) {
+		this.vatNumber = vatNumber;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getWebsite() {
+		return website;
+	}
+
+	public void setWebsite(String website) {
+		this.website = website;
+	}
+
+}
