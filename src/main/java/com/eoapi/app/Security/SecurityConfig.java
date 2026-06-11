@@ -46,8 +46,9 @@ public class SecurityConfig {
 						.frameOptions(frame -> frame.deny())
 						.xssProtection(
 								xss -> xss.headerValue(XXssProtectionHeaderWriter.HeaderValue.ENABLED_MODE_BLOCK))
-					.contentTypeOptions(cto -> {})
-					.contentSecurityPolicy(csp -> csp.policyDirectives(cspPolicy)))
+						.contentTypeOptions(cto -> {
+						})
+						.contentSecurityPolicy(csp -> csp.policyDirectives(cspPolicy)))
 				.authorizeHttpRequests(auth -> auth
 						.requestMatchers("/v1.0/auth/register", "/v1.0/auth/login").permitAll()
 						.requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
@@ -62,7 +63,7 @@ public class SecurityConfig {
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration config = new CorsConfiguration();
 		config.setAllowedOrigins(List.of(allowedOrigins.split(",")));
-		config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+		config.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
 		config.setAllowedHeaders(List.of("Authorization", "Content-Type"));
 		config.setAllowCredentials(true);
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
