@@ -44,10 +44,9 @@ public class AuthController {
 	}
 
 	@PostMapping("/refresh")
-	public ResponseEntity<AuthResponse> refresh(@AuthenticationPrincipal UserModel user,
-			@RequestHeader("Authorization") String authHeader) {
+	public ResponseEntity<AuthResponse> refresh(@RequestHeader("Authorization") String authHeader) {
 		String rawToken = authHeader.substring(7);
-		return ResponseEntity.ok(authService.refresh(user, rawToken));
+		return ResponseEntity.ok(authService.refresh(rawToken));
 	}
 
 	@PostMapping("/logout")

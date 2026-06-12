@@ -76,7 +76,7 @@ public class AuthService {
 
 	public ProfileResponse profile(UserModel user) {
 		return new ProfileResponse(
-				user.getId(), user.getEmail(), user.getFirstName(), user.getLastName(),
+				user.getId(), user.getEmail(), user.getFirstName(), user.getLastName(), user.getPhone(),
 				user.getRole().name(), user.getPlan(), user.getAddress(), user.getBusiness(),
 				user.getCreatedAt(), user.getUpdatedAt());
 	}
@@ -92,6 +92,8 @@ public class AuthService {
 			user.setFirstName(request.getFirstName());
 		if (request.getLastName() != null)
 			user.setLastName(request.getLastName());
+		if (request.getPhone() != null)
+			user.setPhone(request.getPhone());
 		if (request.getAddress() != null) {
 			Address address = user.getAddress() != null ? user.getAddress() : new Address();
 			if (request.getAddress().getStreet() != null)
@@ -142,7 +144,15 @@ public class AuthService {
 		return profile(user);
 	}
 
-	public AuthResponse refresh(UserModel user, String rawRefreshToken) {
+	public AuthResponse refresh(String rawRefreshToken) {
+		String email;
+		try {
+			email = jwtService.extractUsername(rawRefreshToken);
+		} catch (Exception e) {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid refresh token");
+		}
+		UserModel user = userRepository.findByEmail(email)
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid refresh token"));
 		if (user.getHashedRefreshToken() == null ||
 				!sha256(rawRefreshToken).equals(user.getHashedRefreshToken())) {
 			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid refresh token");

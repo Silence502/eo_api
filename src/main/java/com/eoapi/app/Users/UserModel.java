@@ -35,6 +35,7 @@ public class UserModel implements UserDetails {
 	private String plan = "free";
 	private String firstName;
 	private String lastName;
+	private String phone;
 
 	@Embedded
 	private Address address;
@@ -139,6 +140,14 @@ public class UserModel implements UserDetails {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	public Address getAddress() {

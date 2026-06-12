@@ -11,6 +11,7 @@ public class ProfileResponse {
 	private String email;
 	private String firstName;
 	private String lastName;
+	private String phone;
 	private String role;
 	private String plan;
 	private Address address;
@@ -20,13 +21,14 @@ public class ProfileResponse {
 	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private LocalDateTime updatedAt;
 
-	public ProfileResponse(Long id, String email, String firstName, String lastName,
+	public ProfileResponse(Long id, String email, String firstName, String lastName, String phone,
 			String role, String plan, Address address, Business business, LocalDateTime createdAt,
 			LocalDateTime updatedAt) {
 		this.id = id;
 		this.email = email;
 		this.firstName = firstName;
 		this.lastName = lastName;
+		this.phone = phone;
 		this.role = role;
 		this.plan = plan;
 		this.address = address;
@@ -49,6 +51,10 @@ public class ProfileResponse {
 
 	public String getLastName() {
 		return lastName;
+	}
+
+	public String getPhone() {
+		return phone;
 	}
 
 	public String getRole() {

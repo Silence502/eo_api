@@ -318,6 +318,7 @@ CREATE TABLE `users` (
     `plan` enum('free', 'pro', 'enterprise') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'free',
     `first_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
     `last_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+    `phone` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
     `street` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
     `other_street` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
     `city` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
