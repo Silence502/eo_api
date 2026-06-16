@@ -8,9 +8,11 @@ import com.eoapi.app.Auth.dto.UpdateProfileRequest;
 import com.eoapi.app.Users.UserModel;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/v1.0/auth")
@@ -41,6 +43,12 @@ public class AuthController {
 	public ResponseEntity<ProfileResponse> updateProfile(@AuthenticationPrincipal UserModel user,
 			@RequestBody UpdateProfileRequest request) {
 		return ResponseEntity.ok(authService.updateProfile(user, request));
+	}
+
+	@PostMapping(value = "/profile/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity<ProfileResponse> uploadAvatar(@AuthenticationPrincipal UserModel user,
+			@RequestParam("file") MultipartFile file) {
+		return ResponseEntity.ok(authService.uploadAvatar(user, file));
 	}
 
 	@PostMapping("/refresh")

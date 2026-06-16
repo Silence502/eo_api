@@ -36,6 +36,7 @@ public class UserModel implements UserDetails {
 	private String firstName;
 	private String lastName;
 	private String phone;
+	private String avatarUrl;
 
 	@Embedded
 	private Address address;
@@ -148,6 +149,14 @@ public class UserModel implements UserDetails {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public String getAvatarUrl() {
+		return avatarUrl;
+	}
+
+	public void setAvatarUrl(String avatarUrl) {
+		this.avatarUrl = avatarUrl;
 	}
 
 	public Address getAddress() {

@@ -31,7 +31,7 @@ public class SecurityConfig {
 	@Value("${cors.allowed-origins:http://localhost:5173}")
 	private String allowedOrigins;
 
-	@Value("${csp.policy:default-src 'self'; connect-src 'self'; frame-ancestors 'none'; form-action 'self'")
+	@Value("${csp.policy:default-src 'self'; connect-src 'self'; frame-ancestors 'none'; form-action 'self'; img-src 'self' data: blob:; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'self'; block-all-mixed-content; upgrade-insecure-requests;}")
 	private String cspPolicy;
 
 	public SecurityConfig(JwtAuthFilter jwtAuthFilter) {
@@ -53,6 +53,7 @@ public class SecurityConfig {
 				.authorizeHttpRequests(auth -> auth
 						.requestMatchers("/v1.0/auth/register", "/v1.0/auth/login", "/v1.0/auth/refresh").permitAll()
 						.requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
+						.requestMatchers("/uploads/avatars/**").permitAll()
 						.anyRequest().authenticated())
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.exceptionHandling(ex -> ex

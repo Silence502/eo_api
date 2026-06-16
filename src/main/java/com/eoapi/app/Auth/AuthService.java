@@ -14,24 +14,39 @@ import com.eoapi.app.Consents.ConsentRepository;
 import com.eoapi.app.Security.JwtService;
 import com.eoapi.app.Users.UserModel;
 import com.eoapi.app.Users.UserRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
+import java.util.List;
+import java.util.UUID;
 
 @Service
 public class AuthService {
+
+	private static final List<String> ALLOWED_CONTENT_TYPES = List.of(
+			"image/jpeg", "image/png", "image/gif", "image/webp");
 
 	private final UserRepository userRepository;
 	private final ConsentRepository consentRepository;
 	private final PasswordEncoder passwordEncoder;
 	private final JwtService jwtService;
 	private final SettingsRepository settingsRepository;
+
+	@Value("${upload.avatar-dir:uploads/avatars}")
+	private String avatarDir;
 
 	public AuthService(UserRepository userRepository, ConsentRepository consentRepository,
 			PasswordEncoder passwordEncoder, JwtService jwtService, SettingsRepository settingsRepository) {
@@ -77,7 +92,7 @@ public class AuthService {
 	public ProfileResponse profile(UserModel user) {
 		return new ProfileResponse(
 				user.getId(), user.getEmail(), user.getFirstName(), user.getLastName(), user.getPhone(),
-				user.getRole().name(), user.getPlan(), user.getAddress(), user.getBusiness(),
+				user.getAvatarUrl(), user.getRole().name(), user.getPlan(), user.getAddress(), user.getBusiness(),
 				user.getCreatedAt(), user.getUpdatedAt());
 	}
 
@@ -140,6 +155,42 @@ public class AuthService {
 			}
 			user.setBusiness(business);
 		}
+		userRepository.save(user);
+		return profile(user);
+	}
+
+	public ProfileResponse uploadAvatar(UserModel user, MultipartFile file) {
+		String contentType = file.getContentType();
+		if (contentType == null || !ALLOWED_CONTENT_TYPES.contains(contentType)) {
+			throw new ResponseStatusException(HttpStatus.UNSUPPORTED_MEDIA_TYPE,
+					"Only JPEG, PNG, GIF and WebP images are allowed");
+		}
+		if (file.getSize() > 5 * 1024 * 1024) {
+			throw new ResponseStatusException(HttpStatus.CONTENT_TOO_LARGE, "Avatar must be under 5 MB");
+		}
+
+		String extension = contentType.substring(contentType.lastIndexOf('/') + 1).replace("jpeg", "jpg");
+		String filename = UUID.randomUUID() + "." + extension;
+
+		try {
+			Path uploadPath = Paths.get(avatarDir).toAbsolutePath().normalize();
+			Files.createDirectories(uploadPath);
+
+			// Delete old avatar file if present
+			if (user.getAvatarUrl() != null) {
+				Path old = Paths.get(user.getAvatarUrl().replaceFirst("^/", "")).toAbsolutePath().normalize();
+				if (old.startsWith(uploadPath)) {
+					Files.deleteIfExists(old);
+				}
+			}
+
+			Path target = uploadPath.resolve(filename);
+			Files.copy(file.getInputStream(), target, StandardCopyOption.REPLACE_EXISTING);
+		} catch (IOException e) {
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to store avatar");
+		}
+
+		user.setAvatarUrl("/uploads/avatars/" + filename);
 		userRepository.save(user);
 		return profile(user);
 	}
