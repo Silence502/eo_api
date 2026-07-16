@@ -266,7 +266,8 @@ CREATE TABLE `settings` (
     `theme` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'light',
     `language` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'en',
     `timezone` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Europe/Paris',
-    `notifications` tinyint(1) NOT NULL DEFAULT '1',
+    `notifications_email` tinyint(1) NOT NULL DEFAULT '1',
+    `notifications_sms` tinyint(1) NOT NULL DEFAULT '0',
     `updated_at` datetime(6) DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(6)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
@@ -348,7 +349,8 @@ INSERT INTO
         `theme`,
         `language`,
         `timezone`,
-        `notifications`
+        `notifications_email`,
+        `notifications_sms`
     )
 VALUES (
         1,
@@ -356,7 +358,8 @@ VALUES (
         'light',
         'en',
         'Europe/Paris',
-        1
+        1,
+        0
     );
 
 --
