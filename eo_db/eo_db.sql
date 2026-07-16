@@ -263,46 +263,12 @@ CREATE TABLE `locations` (
 CREATE TABLE `settings` (
     `id` bigint UNSIGNED NOT NULL,
     `user_id` bigint UNSIGNED NOT NULL,
-    `key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-    `value` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+    `theme` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'light',
+    `language` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'en',
+    `timezone` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Europe/Paris',
+    `notifications` tinyint(1) NOT NULL DEFAULT '1',
     `updated_at` datetime(6) DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(6)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
-
---
--- Déchargement des données de la table `settings`
---
-
-INSERT INTO
-    `settings` (
-        `id`,
-        `user_id`,
-        `key`,
-        `value`,
-        `created_at`
-    )
-VALUES (1, 6, 'language', 'en', NOW()),
-    (2, 6, 'theme', 'light', NOW()),
-    (
-        3,
-        6,
-        'timezone',
-        'Europe/Paris',
-        NOW()
-    ),
-    (
-        4,
-        6,
-        'receive_notifications',
-        'true',
-        NOW()
-    ),
-    (
-        5,
-        6,
-        'receive_reminders',
-        'true',
-        NOW()
-    );
 
 -- --------------------------------------------------------
 
@@ -372,6 +338,28 @@ VALUES (
     );
 
 --
+-- Déchargement des données de la table `settings`
+--
+
+INSERT INTO
+    `settings` (
+        `id`,
+        `user_id`,
+        `theme`,
+        `language`,
+        `timezone`,
+        `notifications`
+    )
+VALUES (
+        1,
+        6,
+        'light',
+        'en',
+        'Europe/Paris',
+        1
+    );
+
+--
 -- Index pour les tables déchargées
 --
 
@@ -424,7 +412,9 @@ ALTER TABLE `locations` ADD PRIMARY KEY (`id`);
 --
 -- Index pour la table `settings`
 --
-ALTER TABLE `settings` ADD PRIMARY KEY (`id`);
+ALTER TABLE `settings`
+ADD PRIMARY KEY (`id`),
+ADD UNIQUE KEY `IDX_settings_user_id` (`user_id`);
 
 --
 -- Index pour la table `users`
@@ -476,7 +466,7 @@ AUTO_INCREMENT = 2;
 --
 ALTER TABLE `settings`
 MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
-AUTO_INCREMENT = 5;
+AUTO_INCREMENT = 2;
 
 --
 -- AUTO_INCREMENT pour la table `users`
@@ -508,6 +498,12 @@ ADD CONSTRAINT `fk_em_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON
 ALTER TABLE `event_user`
 ADD CONSTRAINT `fk_eu_event` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`) ON DELETE CASCADE,
 ADD CONSTRAINT `fk_eu_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Contraintes pour la table `settings`
+--
+ALTER TABLE `settings`
+ADD CONSTRAINT `fk_settings_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 COMMIT;
 

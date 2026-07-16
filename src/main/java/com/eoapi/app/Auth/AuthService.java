@@ -243,36 +243,15 @@ public class AuthService {
 	}
 
 	private void saveSettings(Long userId, RegisterRequest request) {
-		SettingsModel languageSetting = new SettingsModel();
-		languageSetting.setUserId(userId);
-		languageSetting.setKey("language");
-		languageSetting.setValue(request.getLanguage() != null ? request.getLanguage() : "en");
-		settingsRepository.save(languageSetting);
-
-		SettingsModel themeSetting = new SettingsModel();
-		themeSetting.setUserId(userId);
-		themeSetting.setKey("theme");
-		themeSetting.setValue(request.getTheme() != null ? request.getTheme() : "light");
-		settingsRepository.save(themeSetting);
-
-		SettingsModel timezoneSetting = new SettingsModel();
-		timezoneSetting.setUserId(userId);
-		timezoneSetting.setKey("timezone");
-		timezoneSetting.setValue(request.getTimezone() != null ? request.getTimezone() : "UTC");
-		settingsRepository.save(timezoneSetting);
-
-		SettingsModel receiveNotificationsSetting = new SettingsModel();
-		receiveNotificationsSetting.setUserId(userId);
-		receiveNotificationsSetting.setKey("receive_notifications");
-		receiveNotificationsSetting
-				.setValue(request.getReceiveNotifications() != null ? request.getReceiveNotifications() : "true");
-		settingsRepository.save(receiveNotificationsSetting);
-
-		SettingsModel receiveRemindersSetting = new SettingsModel();
-		receiveRemindersSetting.setUserId(userId);
-		receiveRemindersSetting.setKey("receive_reminders");
-		receiveRemindersSetting
-				.setValue(request.getRevceiveReminders() != null ? request.getRevceiveReminders() : "true");
-		settingsRepository.save(receiveRemindersSetting);
+		SettingsModel settings = new SettingsModel();
+		settings.setUserId(userId);
+		settings.setTheme(request.getTheme() != null ? request.getTheme() : "light");
+		settings.setLanguage(request.getLanguage() != null ? request.getLanguage() : "en");
+		settings.setTimezone(request.getTimezone() != null ? request.getTimezone() : "UTC");
+		settings.setNotifications(
+				request.getReceiveNotifications() != null
+						? Boolean.parseBoolean(request.getReceiveNotifications())
+						: true);
+		settingsRepository.save(settings);
 	}
 }

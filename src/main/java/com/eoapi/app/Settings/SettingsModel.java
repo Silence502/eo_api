@@ -15,11 +15,17 @@ public class SettingsModel {
 	@Column(name = "user_id", nullable = false)
 	private Long userId;
 
-	@Column(name = "`key`", nullable = false)
-	private String key;
+	@Column(name = "theme", nullable = false)
+	private String theme;
 
-	@Column(name = "value", nullable = false)
-	private String value;
+	@Column(name = "language", nullable = false)
+	private String language;
+
+	@Column(name = "timezone", nullable = false)
+	private String timezone;
+
+	@Column(name = "notifications", nullable = false)
+	private Boolean notifications;
 
 	@Column(name = "updated_at")
 	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
@@ -42,20 +48,36 @@ public class SettingsModel {
 		this.userId = userId;
 	}
 
-	public String getKey() {
-		return key;
+	public String getTheme() {
+		return theme;
 	}
 
-	public void setKey(String key) {
-		this.key = key;
+	public void setTheme(String theme) {
+		this.theme = theme;
 	}
 
-	public String getValue() {
-		return value;
+	public String getLanguage() {
+		return language;
 	}
 
-	public void setValue(String value) {
-		this.value = value;
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+
+	public String getTimezone() {
+		return timezone;
+	}
+
+	public void setTimezone(String timezone) {
+		this.timezone = timezone;
+	}
+
+	public Boolean getNotifications() {
+		return notifications;
+	}
+
+	public void setNotifications(Boolean notifications) {
+		this.notifications = notifications;
 	}
 
 	public LocalDateTime getUpdatedAt() {
