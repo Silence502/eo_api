@@ -17,12 +17,6 @@ public class SettingsModel {
 	@Column(name = "user_id", nullable = false)
 	private Long userId;
 
-	@Column(name = "theme", nullable = false)
-	private String theme;
-
-	@Column(name = "language", nullable = false)
-	private String language;
-
 	@Column(name = "timezone", nullable = false)
 	private String timezone;
 
@@ -55,22 +49,6 @@ public class SettingsModel {
 
 	public void setUserId(Long userId) {
 		this.userId = userId;
-	}
-
-	public String getTheme() {
-		return theme;
-	}
-
-	public void setTheme(String theme) {
-		this.theme = theme;
-	}
-
-	public String getLanguage() {
-		return language;
-	}
-
-	public void setLanguage(String language) {
-		this.language = language;
 	}
 
 	public String getTimezone() {

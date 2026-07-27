@@ -245,13 +245,9 @@ public class AuthService {
 	private void saveSettings(Long userId, RegisterRequest request) {
 		SettingsModel settings = new SettingsModel();
 		settings.setUserId(userId);
-		settings.setTheme(request.getTheme() != null ? request.getTheme() : "light");
-		settings.setLanguage(request.getLanguage() != null ? request.getLanguage() : "en");
 		settings.setTimezone(request.getTimezone() != null ? request.getTimezone() : "UTC");
-		settings.setNotifications(
-				request.getReceiveNotifications() != null
-						? Boolean.parseBoolean(request.getReceiveNotifications())
-						: true);
+		settings.setNotificationsEmail(request.getNotificationsEmail() != null ? request.getNotificationsEmail() : true);
+		settings.setNotificationsSms(request.getNotificationsSms() != null ? request.getNotificationsSms() : false);
 		settingsRepository.save(settings);
 	}
 }

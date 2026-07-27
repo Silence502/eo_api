@@ -28,11 +28,12 @@ public class SettingsService {
 					return newSettings;
 				});
 
-		existing.setTheme(settings.getTheme());
-		existing.setLanguage(settings.getLanguage());
-		existing.setTimezone(settings.getTimezone());
-		existing.setNotificationsEmail(settings.getNotificationsEmail());
-		existing.setNotificationsSms(settings.getNotificationsSms());
+		if (settings.getTimezone() != null)
+			existing.setTimezone(settings.getTimezone());
+		if (settings.getNotificationsEmail() != null)
+			existing.setNotificationsEmail(settings.getNotificationsEmail());
+		if (settings.getNotificationsSms() != null)
+			existing.setNotificationsSms(settings.getNotificationsSms());
 		existing.setUpdatedAt(LocalDateTime.now());
 
 		return settingsRepository.save(existing);

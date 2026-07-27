@@ -263,8 +263,6 @@ CREATE TABLE `locations` (
 CREATE TABLE `settings` (
     `id` bigint UNSIGNED NOT NULL,
     `user_id` bigint UNSIGNED NOT NULL,
-    `theme` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'light',
-    `language` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'en',
     `timezone` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Europe/Paris',
     `notifications_email` tinyint(1) NOT NULL DEFAULT '1',
     `notifications_sms` tinyint(1) NOT NULL DEFAULT '0',
@@ -346,21 +344,11 @@ INSERT INTO
     `settings` (
         `id`,
         `user_id`,
-        `theme`,
-        `language`,
         `timezone`,
         `notifications_email`,
         `notifications_sms`
     )
-VALUES (
-        1,
-        6,
-        'light',
-        'en',
-        'Europe/Paris',
-        1,
-        0
-    );
+VALUES (1, 6, 'Europe/Paris', 1, 0);
 
 --
 -- Index pour les tables déchargées

@@ -35,9 +35,9 @@ public class RegisterRequest {
 
 	private String timezone;
 
-	private String receiveNotifications;
+	private Boolean notificationsEmail;
 
-	private String revceiveReminders;
+	private Boolean notificationsSms;
 
 	public String getEmail() {
 		return email;
@@ -127,19 +127,19 @@ public class RegisterRequest {
 		this.timezone = timezone;
 	}
 
-	public String getReceiveNotifications() {
-		return receiveNotifications;
+	public Boolean getNotificationsEmail() {
+		return notificationsEmail;
 	}
 
-	public void setReceiveNotifications(String receiveNotifications) {
-		this.receiveNotifications = receiveNotifications;
+	public void setNotificationsEmail(Boolean notificationsEmail) {
+		this.notificationsEmail = notificationsEmail;
 	}
 
-	public String getRevceiveReminders() {
-		return revceiveReminders;
+	public Boolean getNotificationsSms() {
+		return notificationsSms;
 	}
 
-	public void setRevceiveReminders(String revceiveReminders) {
-		this.revceiveReminders = revceiveReminders;
+	public void setNotificationsSms(Boolean notificationsSms) {
+		this.notificationsSms = notificationsSms;
 	}
 }
