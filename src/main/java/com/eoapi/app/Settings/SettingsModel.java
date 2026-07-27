@@ -1,7 +1,6 @@
 package com.eoapi.app.Settings;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 import java.time.LocalDateTime;
@@ -14,23 +13,20 @@ public class SettingsModel {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "user_id", nullable = false)
+	@Column(nullable = false)
 	private Long userId;
 
 	@Column(name = "timezone", nullable = false)
 	private String timezone;
 
-	@JsonProperty("notifications_email")
 	@ColumnDefault("1")
-	@Column(name = "notifications_email", nullable = false)
+	@Column(nullable = false)
 	private Boolean notificationsEmail;
 
-	@JsonProperty("notifications_sms")
 	@ColumnDefault("0")
-	@Column(name = "notifications_sms", nullable = false)
+	@Column(nullable = false)
 	private Boolean notificationsSms;
 
-	@Column(name = "updated_at")
 	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private LocalDateTime updatedAt;
 
