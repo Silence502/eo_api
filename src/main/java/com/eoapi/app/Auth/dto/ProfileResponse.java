@@ -14,6 +14,7 @@ public class ProfileResponse {
 	private String phone;
 	private String avatarUrl;
 	private String role;
+	private String status;
 	private String plan;
 	private Address address;
 	private Business business;
@@ -23,7 +24,7 @@ public class ProfileResponse {
 	private LocalDateTime updatedAt;
 
 	public ProfileResponse(Long id, String email, String firstName, String lastName, String phone,
-			String avatarUrl, String role, String plan, Address address, Business business,
+			String avatarUrl, String role, String status, String plan, Address address, Business business,
 			LocalDateTime createdAt, LocalDateTime updatedAt) {
 		this.id = id;
 		this.email = email;
@@ -32,6 +33,7 @@ public class ProfileResponse {
 		this.phone = phone;
 		this.avatarUrl = avatarUrl;
 		this.role = role;
+		this.status = status;
 		this.plan = plan;
 		this.address = address;
 		this.business = business;
@@ -65,6 +67,10 @@ public class ProfileResponse {
 
 	public String getRole() {
 		return role;
+	}
+
+	public String getStatus() {
+		return status;
 	}
 
 	public String getPlan() {

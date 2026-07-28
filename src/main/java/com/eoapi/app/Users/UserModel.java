@@ -32,6 +32,10 @@ public class UserModel implements UserDetails {
 	@Column(nullable = false)
 	private Role role = Role.USER;
 
+	@Convert(converter = StatusConverter.class)
+	@Column(nullable = false)
+	private Status status = Status.ACTIVE;
+
 	private String plan = "free";
 	private String firstName;
 	private String lastName;
@@ -117,6 +121,14 @@ public class UserModel implements UserDetails {
 
 	public void setRole(Role role) {
 		this.role = role;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 
 	public String getPlan() {

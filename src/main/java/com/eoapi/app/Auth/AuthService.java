@@ -92,7 +92,8 @@ public class AuthService {
 	public ProfileResponse profile(UserModel user) {
 		return new ProfileResponse(
 				user.getId(), user.getEmail(), user.getFirstName(), user.getLastName(), user.getPhone(),
-				user.getAvatarUrl(), user.getRole().name(), user.getPlan(), user.getAddress(), user.getBusiness(),
+				user.getAvatarUrl(), user.getRole().name(), user.getStatus().name(), user.getPlan(), user.getAddress(),
+				user.getBusiness(),
 				user.getCreatedAt(), user.getUpdatedAt());
 	}
 
@@ -246,7 +247,8 @@ public class AuthService {
 		SettingsModel settings = new SettingsModel();
 		settings.setUserId(userId);
 		settings.setTimezone(request.getTimezone() != null ? request.getTimezone() : "UTC");
-		settings.setNotificationsEmail(request.getNotificationsEmail() != null ? request.getNotificationsEmail() : true);
+		settings.setNotificationsEmail(
+				request.getNotificationsEmail() != null ? request.getNotificationsEmail() : true);
 		settings.setNotificationsSms(request.getNotificationsSms() != null ? request.getNotificationsSms() : false);
 		settingsRepository.save(settings);
 	}

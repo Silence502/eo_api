@@ -280,6 +280,11 @@ CREATE TABLE `users` (
     `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
     `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
     `role` enum('user', 'admin', 'moderator') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'user',
+    `status` enum(
+        'active',
+        'inactive',
+        'banned'
+    ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'active',
     `plan` enum('free', 'pro', 'enterprise') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'free',
     `first_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
     `last_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -316,6 +321,7 @@ INSERT INTO
         `email`,
         `password`,
         `role`,
+        `status`,
         `plan`,
         `first_name`,
         `last_name`,
@@ -329,6 +335,7 @@ VALUES (
         '$2b$10$vG6Kcyw0Px7op2eHnl5LpO82bWxUPlw2iB1iOKpuqHoA8/i7QmQcS',
         'user',
         'free',
+        'active',
         'John',
         'Doe',
         '$2b$10$ZhVXXpwnsUzP2HAesHNhRuz9LOYxEI5S/wqh.YAz65p4HTzY/1psW',
